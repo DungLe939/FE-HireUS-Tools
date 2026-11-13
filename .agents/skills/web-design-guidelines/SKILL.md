@@ -1,39 +1,30 @@
 ---
 name: web-design-guidelines
-description: Review UI code for Web Interface Guidelines compliance. Use when asked to "review my UI", "check accessibility", "audit design", "review UX", or "check my site against best practices".
+description: Rà soát UI HireUS về khả năng sử dụng, accessibility và tính nhất quán; dùng khi người dùng yêu cầu review giao diện hoặc UX.
 metadata:
   author: vercel
   version: "1.0.0"
-  argument-hint: <file-or-pattern>
+  maintainer: HireUS Tools
 ---
 
-# Web Interface Guidelines
+# Review UI và UX
 
-Review files for compliance with Web Interface Guidelines.
+Đọc [AGENTS.md](../../../AGENTS.md), màn hình/luồng được yêu cầu và yêu cầu sản phẩm
+tại [PROJECT_SOURCES.md](../../../PROJECT_SOURCES.md). Review chỉ đọc trừ khi có yêu cầu sửa.
 
-## How It Works
+Nếu cần áp dụng Web Interface Guidelines của Vercel, lấy bản hiện tại qua công cụ
+web có sẵn từ https://raw.githubusercontent.com/vercel-labs/web-interface-guidelines/main/command.md.
+Không truy cập được thì báo giới hạn; vẫn có thể review UI trong phạm vi nguồn local,
+nhưng không gọi đó là audit guideline mới nhất.
 
-1. Fetch the latest guidelines from the source URL below with an available web browsing or fetch tool.
-2. Read the specified files (or prompt user for files/pattern)
-3. Check against all rules in the fetched guidelines
-4. Output findings in the terse `file:line` format
+Kiểm tra theo tình huống người dùng:
+- Form có label, lỗi tại trường, thứ tự focus và thao tác keyboard.
+- Loading/rỗng/lỗi/thử lại có ý nghĩa; thao tác xóa cần xác nhận theo yêu cầu.
+- Điểm, thời hạn tin và trạng thái xử lý có nhãn chữ, không chỉ màu.
+- Nội dung dài, tiếng Việt và kích thước màn hình thuộc phạm vi hỗ trợ.
+- Trình chỉnh sửa CV không mất dữ liệu; AI chưa duyệt không được áp dụng.
+- Màn hình prototype có thể cũ hơn đặc tả. Dùng quy tắc nguồn để chọn hành vi,
+  không khôi phục tính năng đã bị loại chỉ vì nút vẫn xuất hiện trong ảnh.
 
-## Guidelines Source
-
-Fetch fresh guidelines before each review:
-
-```
-https://raw.githubusercontent.com/vercel-labs/web-interface-guidelines/main/command.md
-```
-
-Use the web-fetch capability available in the current agent. If none is available, ask the user to provide the current guideline content and do not present remembered rules as a live audit.
-
-## Usage
-
-When a user provides a file or pattern argument:
-1. Fetch guidelines from the source URL above
-2. Read the specified files
-3. Apply all rules from the fetched guidelines
-4. Output findings using the format specified in the guidelines
-
-If no files specified, ask the user which files to review.
+Báo findings theo file/vị trí hoặc màn hình, trigger và tác động.
+Chỉ mô tả những gì đã nhìn thấy/chạy thử; ảnh tĩnh không chứng minh tương tác hoạt động.

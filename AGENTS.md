@@ -1,52 +1,83 @@
-# HireUS Frontend Agent Instructions
+# HireUS Frontend — hướng dẫn lập trình
 
-## Purpose and verified stack
+## Hiện trạng và nguồn
 
-This repository contains the HireUS Tools frontend. Product requirements and cross-repository decisions live in CNPM-Docs; use PROJECT_SOURCES.md to locate and verify them.
+Đọc [PROJECT_SOURCES.md](PROJECT_SOURCES.md) để tìm yêu cầu tại `../documents/`.
+Kiểm tra manifest và code trên nhánh đang làm trước khi dựa vào mô tả baseline:
 
-- Next.js 16.4.3 with App Router under src/app.
-- React 19.3.0 and TypeScript 5.9.3 resolved by package-lock.json.
-- npm is the package manager. The @/* alias maps to src/*.
-- The current app uses global CSS and CSS Modules. Tailwind is not configured.
-- There is no test script or test framework in package.json.
+- Next.js App Router tại `src/app/`, React, TypeScript strict và npm.
+- Alias `@/*` trỏ tới `src/*`; CSS toàn cục và CSS Modules.
+- Baseline hiện tại chưa cấu hình Tailwind, auth hoặc test framework.
 
-## Product sources and scope
+## Giao diện và tích hợp
 
-- For business-related work, follow PROJECT_SOURCES.md and read the relevant CNPM-Docs source before planning or editing.
-- Distinguish confirmed requirements from proposals and plans. Do not infer features beyond confirmed sources and the task's acceptance criteria.
-- If the source changes, verify the relevant requirement again before changing implementation.
-- Do not update CNPM-Docs while working in Frontend. If shared documentation needs a change, report the exact change for the Docs repository.
+- Giữ Server Components mặc định; dùng Client Components cho state tương tác,
+  event handlers và browser APIs. Đặt code theo route; chỉ tách dùng chung khi có nhu cầu.
+- Nối API theo contract backend; quy trình nằm tại
+  [contracts/README.md](contracts/README.md). Không tự chọn endpoint, DTO,
+  response, error shape hay auth còn thiếu. Thiết kế UI độc lập có thể tiếp tục
+  khi contract chưa đủ, nhưng phải phân biệt dữ liệu mẫu với tích hợp thật.
+- Giữ khóa dịch vụ và thao tác đặc quyền ở server. Kiểm tra quyền ở UI
+  không thay thế kiểm tra quyền của backend.
+- Xử lý trạng thái tải, rỗng, lỗi và thành công phù hợp với luồng được yêu cầu.
 
-## Frontend implementation
+## Skills và quy trình
 
-- Preserve the existing App Router and strict TypeScript configuration.
-- Keep route-specific UI close to its route. Add shared components only when reuse warrants them; avoid creating architecture or state-management layers without a concrete need.
-- Use Server Components by default. Add Client Component boundaries only for browser APIs, local interaction state, or event handlers that need them.
-- Prefer server-side data access where it fits the route. Keep client-side fetching for genuinely interactive browser flows.
-- Follow the matching repo-local skills in .agents/skills. Use the Vercel React/Next.js guidance when it applies, without treating performance examples as requirements.
+Các `SKILL.md` là hướng dẫn dùng chung cho nhiều agent. Nếu công cụ không tự nạp,
+đọc file trực tiếp và dùng khả năng tương đương sẵn có; không giả định cú pháp gọi
+skill hoặc tên tool giống nhau giữa các agent.
 
-## REST API and security
+Chỉ đọc skill liên quan tại `.agents/skills/`:
 
-- Backend owns the authoritative REST API contract; Frontend consumes it. Follow contracts/README.md.
-- Do not invent endpoint paths, HTTP methods, request/response schemas, error shapes, or authentication behavior. Ask for the approved Backend contract when it is missing.
-- Never hardcode API keys, secrets, or access tokens. Keep credentials and privileged operations on the server.
-- Client-side authorization is for user experience only; Backend authorization remains authoritative.
-- Authentication is not implemented or specified in this repository. Do not add an auth flow without an approved task and contract.
+| Công việc | Skill |
+| --- | --- |
+| Page, form, component, tương tác | [nextjs-feature](.agents/skills/nextjs-feature/SKILL.md) |
+| Nối API | [rest-api-consumer](.agents/skills/rest-api-consumer/SKILL.md) |
+| Review kỹ thuật | [frontend-quality](.agents/skills/frontend-quality/SKILL.md) |
+| Hiệu năng React/Next.js | [vercel-react-best-practices](.agents/skills/vercel-react-best-practices/SKILL.md) |
+| Review UI/khả năng truy cập | [web-design-guidelines](.agents/skills/web-design-guidelines/SKILL.md) |
 
-## Quality and completion
+Sửa nhỏ làm trực tiếp từ yêu cầu đủ rõ. Spec Kit tùy chọn cho tính năng lớn:
+đọc [.agents/references/spec-kit.md](.agents/references/spec-kit.md) trước khi gọi
+`speckit-*`. Project rules ưu tiên hơn ví dụ mặc định trong template;
+không tự chọn OAuth/session hay chỉ tiêu hiệu năng chưa có nguồn.
 
-Available checks:
+Reviewer tại `.codex/agents/` là adapter riêng cho Codex. Với agent khác, dùng
+`frontend-quality` và `rest-api-consumer` trực tiếp cho phần review liên quan.
+Chỉ giao reviewer riêng khi tác vụ cho phép và công cụ hỗ trợ; không cần nhiều agent.
 
-- npm run lint
-- npx tsc --noEmit
-- npm run build
+## Kiểm tra và bàn giao
 
-No test command is currently configured. Use an existing relevant test suite when the task requests tests or verification; do not add a test framework as part of an unrelated change.
+Khi bắt đầu việc có sửa, kiểm tra nhánh/upstream và thay đổi local; nếu chưa cập nhật
+nguồn cho đầu việc, nhắc pull một lần. Yêu cầu cập nhật/push cho phép fetch remote
+liên quan; không pull khi chỉ đọc local. Dùng fast-forward khi sạch và chỉ behind;
+không tự stash/reset hoặc force-push. Nếu phân kỳ, xem hai phía và bảo toàn lịch sử.
 
-A change is complete when it meets its accepted scope, preserves the established component and server/client boundaries, handles applicable loading/empty/error/success states, and passes the requested checks. Report changed files, validation results, and unresolved source or contract questions.
+Trước bàn giao/push, xem cả commit chưa push, diff và file mới liên quan; đối chiếu
+README/cách chạy, config mẫu, contract, spec/tasks và tài liệu yêu cầu. Cập nhật
+tài liệu kỹ thuật/tổng hợp bị tác động, sửa/gộp/bỏ bản dẫn xuất lỗi thời có căn cứ;
+không đổi nghiệp vụ chỉ để khớp code lỗi. Đọc hướng dẫn documents trước khi sửa.
+Nếu mở workspace, đọc `../.agents/skills/team-sync/SKILL.md` và skill
+`docs-maintenance` trong repo tài liệu; clone riêng vẫn áp dụng các bước trên.
+Thiếu checkout tài liệu thì nêu phần chưa đối chiếu, hỏi đường dẫn nếu cần và
+tiếp tục phần độc lập; không báo đã sync mọi tài liệu.
 
-## Change boundaries
+Với code thay đổi, chạy kiểm tra phù hợp từ repo này:
 
-- Change only files needed for the requested task. Do not modify other repositories, generated Spec Kit integration files, or unrelated application behavior.
-- Do not commit or push unless the user explicitly asks.
-- When reviewing, report evidence and file locations; do not edit unless implementation was requested.
+```bash
+npm run lint
+npx tsc --noEmit
+npm run build
+```
+
+Chưa có lệnh test trong baseline; kiểm tra lại `package.json` nếu nhánh đã thay đổi.
+Không thêm test framework cho một sửa không liên quan.
+
+Phần cập nhật tài liệu liên quan trước bàn giao/push thuộc quy trình nhóm ở trên;
+sửa repo khác ngoài phần đó cần yêu cầu phối hợp. Đọc hướng dẫn repo kia trước khi sửa.
+Giữ nhánh đang làm, bảo vệ thay đổi local. Skills/hướng dẫn là tài nguyên nhóm,
+không thêm vào ignore. Chỉ commit/push khi được yêu cầu.
+Báo đã làm gì, kiểm tra đã chạy, tài liệu sửa/giữ/xóa và lý do, phần còn thiếu;
+giải thích luồng đáng chú ý bằng tiếng Việt. Push bị remote đi trước thì fetch,
+tích hợp cùng đích đã xác minh, rà lại tài liệu và kiểm tra phần bị tác động.
+Sau push, xác nhận commit/nhánh đích; không coi push FE là đã công bố documents hoặc repo cha.
