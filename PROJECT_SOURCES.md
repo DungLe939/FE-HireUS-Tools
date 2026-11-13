@@ -1,34 +1,39 @@
-# Central Project Sources
+# Nguồn yêu cầu HireUS Tools
 
-## Official documentation repository
+## Tìm checkout tài liệu
 
-CNPM-Docs is the source of truth for business requirements, the Project Proposal, shared project plans, cross-repository design, and confirmed project decisions.
+Trong workspace HireUS-Tools, repo tài liệu là `../documents/` tính từ repo này.
+Tên GitHub là Docs-HireUS-Tools; một số bản cũ gọi là CNPM-Docs.
+Nếu mở repo độc lập, dùng checkout tài liệu được cung cấp thay vì yêu cầu đổi tên.
+Không có nguồn thì hỏi đường dẫn và tiếp tục phần kỹ thuật độc lập.
 
-## Read order
+## Nội dung và phiên bản
 
-Follow the precedence rules in the first source before relying on the others:
+Đọc [quy tắc nguồn](../documents/.agents/rules/source-of-truth.md).
+Theo chỉ dẫn của nhóm, khi cùng nội dung có mâu thuẫn, dùng **phiên bản nội dung
+mới nhất**; xét revision/lịch sử thay đổi, không dùng ngày copy file.
 
-1. CNPM-Docs: .agents/rules/source-of-truth.md
-2. CNPM-Docs: docs/Week01/Submission/Project_Proposal.md
-3. CNPM-Docs: docs/PROJECT_CONTEXT.md
-4. CNPM-Docs: docs/Week01/Team_Decision/Material/HireUS_Implementation_Plan.md
+| Cần xác định | Đọc |
+| --- | --- |
+| Hành vi hiện tại của 4 phân hệ | [Requirements Analysis](../documents/docs/Week02/Submission/Requirements_Analysis.md) và [HTML](../documents/docs/Week02/Submission/Requirements_Analysis.html) |
+| Bối cảnh, nhân sự/kế hoạch ban đầu | [Proposal](../documents/docs/Week01/Submission/Project_Proposal.md), trong phạm vi chưa bị bản mới thay |
+| Bài nguồn/ghi chú tổng hợp | [README Week02](../documents/docs/Week02/Submission/README.md), đối chiếu bản nộp mới hơn |
+| Bài nộp | Template và thông báo của đợt tương ứng trong repo tài liệu |
 
-The Project Context and Implementation Plan are navigation or summary documents; they do not override the confirmed source rules or Proposal. Treat plans as proposed work, not evidence that a feature has shipped. If authoritative sources conflict and the replacement is unclear, report the conflict and ask for confirmation.
+Spec/plan/tasks ở repo này chỉ ghi phần triển khai và dẫn nguồn. Không tự chọn auth,
+quyền truy cập, Profile schema hoặc công thức chưa được quyết định.
+Nếu bản mới tự mâu thuẫn hoặc chưa xác định được thứ tự, hỏi phần cần quyết định
+và tiếp tục việc độc lập. Kế hoạch/prototype không chứng minh implementation.
 
-The source rules also identify docs/Week01/Submission/Project_Proposal.html as the checked HTML counterpart to the Markdown Proposal. Compare both if they disagree; do not silently choose one when the conflict is unresolved.
+## Truy vết và chủ sở hữu
 
-## Providing sources to Codex
+Ghi commit/revision và các đường dẫn nguồn dùng cho tính năng.
+Nguồn có sửa local thì ghi rõ file và diff/hash liên quan.
+Backend sở hữu HTTP contract; xem [contracts/README.md](contracts/README.md).
+FE tích hợp ghi phiên bản contract và dẫn về nguồn đó.
 
-When CNPM-Docs is available in the workspace, read the relevant files at the paths above. Otherwise, provide the required files or make the repository accessible. If the sources cannot be accessed, say that the business information is unverified, request the relevant path or files, and continue only with independent technical work. Do not infer missing business requirements from old summaries or examples.
-
-## Decision status
-
-Label information as confirmed, proposed, implemented, or undecided. A proposal or implementation plan is not proof of implementation. Verify implementation in the application repository before describing it as shipped. Do not promote an AI suggestion into a project decision.
-
-## Source revision
-
-When a task, specification, or review depends on a particular documentation snapshot, record the CNPM-Docs commit or source revision together with the repository-relative paths consulted. If the Docs working tree is dirty, say so and identify the relevant local changes or use a supplied snapshot. Do not put machine-specific absolute paths in tracked files.
-
-## Ownership
-
-Do not edit CNPM-Docs while working in Frontend. If a shared requirement, plan, or decision needs an update, report the proposed change for the Docs repository. The Backend-owned API contract is referenced separately in contracts/README.md.
+Chỉ sửa tài liệu hoặc repo khác khi tác vụ gồm phần phối hợp đó; đọc hướng dẫn repo
+kia trước. Quy trình bàn giao/push của nhóm gồm đối chiếu và sửa tài liệu kỹ thuật,
+tổng hợp liên quan đến thay đổi; yêu cầu nghiệp vụ vẫn chỉ đổi theo quyết định mới
+có nguồn. Dùng skill `docs-maintenance` trong checkout tài liệu để sửa/gộp/bỏ bản
+dẫn xuất lỗi thời và cập nhật callers. Không tự sync Git/Drive chỉ vì đang đọc nguồn.
