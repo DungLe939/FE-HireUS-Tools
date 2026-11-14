@@ -137,7 +137,7 @@ Text on gradients is weight 500+.
 The three columns form **one connected, edge-to-edge frame**: no outer padding, no gaps between columns, no rounded corners on the columns, no floating panels. Build it as a full-height flex row (`display: flex; flex-wrap: wrap; gap: 1px; background: var(--hairline); min-height: 100%`), so the 1px dividers between columns come from the gap. Rail background is `--surface`; list and detail are `--ash-white`. Rounded corners apply only to elements inside the columns (rows, cards, chips, buttons).
 
 **1. Icon rail** (left, 72px wide, full height, `--surface` background, padding `16px 13px`)
-- HireUS logo mark at the top (46px target), then one 46x46 icon button per top-level section (Overview, Jobs, Candidates, Interviews, Analytics), gap 8px.
+- HireUS logo mark at the top (46px target), then one 46x46 icon button per top-level section, gap 8px.
 - Icons: 20px outline, stroke 1.75. Button radius 14px.
 - Active: `--soft-ember` background, `--ember-core` icon. Inactive: transparent, `--muted-ash`. Hover: `filter: brightness(.95)`.
 - Every button has `aria-label`; the current one has `aria-current="page"`.
