@@ -6,6 +6,9 @@ description: Triển khai hoặc sửa page, component, form và tương tác Ne
 # Làm tính năng frontend
 
 Đọc [AGENTS.md](../../../AGENTS.md) và [PROJECT_SOURCES.md](../../../PROJECT_SOURCES.md).
+Trước khi xây hoặc sửa UI, đọc [UI context](../../rules/ui_context.md) để dùng đúng
+theme, token và pattern. Hành vi và ngưỡng đánh giá lấy từ nguồn nghiệp vụ được dẫn
+trong `PROJECT_SOURCES.md`; không dùng ví dụ UI để thay yêu cầu sản phẩm.
 Xác định màn hình, luồng và tiêu chí nghiệm thu từ nguồn mới nhất; inspect route,
 components, styles và manifest trên nhánh đang làm trước khi chọn cấu trúc.
 

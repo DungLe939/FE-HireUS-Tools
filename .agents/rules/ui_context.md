@@ -2,15 +2,19 @@
 
 Read this before building or changing any screen. Every feature must follow it so the whole product looks like one design.
 
+This document owns visual styling and reusable patterns. Product behavior, permissions,
+score thresholds and classification rules come from the current sources referenced by
+[PROJECT_SOURCES.md](../../PROJECT_SOURCES.md). Examples here do not introduce product features.
+
 ## Rules
 
 1. Never hard-code hex values, radii, or font sizes in components. Use the tokens below.
 2. Use the documented app shell, components, and patterns. Do not invent new layouts, shades, shadows, or accent colors. Never float, gap, or round the three app-shell columns.
-3. One warm accent family only (ember). No blue, green, or purple UI colors.
+3. Use one warm accent family (ember) for branding and decorative UI. The semantic status tokens below are an explicit exception for feedback and business classifications; do not use them as decorative accents.
 4. The thermal gradient is a highlight: at most one per screen section (a thermal button counts).
 5. Placeholder content stays obviously a placeholder (`[Candidate name]`, `[XX]%`). Never invent stats, logos, or testimonials.
 6. Every screen must work with Vietnamese text (see Typography).
-7. Status colors (success/error/warning) are not defined. Convey status with an icon, a text label, and `--charred-ash`; do not use ember colors for errors. Do not introduce new colors without asking.
+7. Use the defined semantic status tokens for success/error/warning and red/yellow/green business results. Always include a text label and, where useful, an icon. Keep unknown, pending and failed-to-evaluate states distinct from a low score; do not use ember branding as an error color or invent additional semantic colors.
 
 ## Look and feel
 
@@ -33,6 +37,12 @@ Warm-minimal SaaS with a thermal glow: airy, large type, soft rounded cards, hai
 | `--hairline` | `#EADFD6` | 1px dividers and container borders |
 | `--border` | `#E3D6CB` | Outlined buttons, input borders |
 | `--heat-yellow` | `#FAC76B` | Thermal gradients only |
+| `--status-danger` | `#991B1B` | Error text/icon or red classification |
+| `--status-danger-bg` | `#FEF2F2` | Background paired with status-danger |
+| `--status-warning` | `#854D0E` | Warning text/icon or yellow classification |
+| `--status-warning-bg` | `#FEFCE8` | Background paired with status-warning |
+| `--status-success` | `#166534` | Success text/icon or green classification |
+| `--status-success-bg` | `#F0FDF4` | Background paired with status-success |
 
 ```css
 :root {
@@ -41,8 +51,30 @@ Warm-minimal SaaS with a thermal glow: airy, large type, soft rounded cards, hai
   --ember-core: #C1341A; --coal: #8A2B25;  --charred-ash: #2B1210;
   --muted-ash: #6E5A53;  --hairline: #EADFD6;  --border: #E3D6CB;
   --heat-yellow: #FAC76B;
+  --status-danger: #991B1B; --status-danger-bg: #FEF2F2;
+  --status-warning: #854D0E; --status-warning-bg: #FEFCE8;
+  --status-success: #166534; --status-success-bg: #F0FDF4;
 }
 ```
+
+### Semantic status usage
+
+Use each status foreground on its paired background, with readable text and an icon
+when helpful. These foreground/background pairs meet 4.5:1 for normal text; validate
+contrast again if opacity, overlays or colors change. Do not put small white text on
+the pale status backgrounds or replace the status foreground with a brand gradient.
+
+For Job Matching and Voice Mock Interview, map the red/yellow/green classification
+returned under the applicable contract to danger/warning/success styling. The labels
+must explain the result in the module's language; a red assessment is not an API error.
+Keep thresholds, formulas and recommendations in the domain sources, not this file:
+consult FR-JM-15 and BR-JM-06 for JM, and BR-VMI-04/05 for VMI through
+[PROJECT_SOURCES.md](../../PROJECT_SOURCES.md). Do not reuse one module's threshold
+in another or derive a classification from the displayed rounded score.
+
+If the API does not provide a classification yet, agree the computation and contract
+with Backend before integration. Missing required input, loading and service failures
+use their own explicit state; never present a failed calculation as a red 0% result.
 
 If the project uses Tailwind, map these exact names and values into `theme.extend.colors`.
 

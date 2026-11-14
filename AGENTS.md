@@ -11,6 +11,9 @@ Kiểm tra manifest và code trên nhánh đang làm trước khi dựa vào mô
 
 ## Giao diện và tích hợp
 
+- Trước khi xây hoặc sửa UI, đọc [UI context](.agents/rules/ui_context.md).
+  Dùng tài liệu này cho hình thức và token; hành vi, quyền và ngưỡng đánh giá theo
+  nguồn tại `PROJECT_SOURCES.md`. Có mâu thuẫn chưa rõ thì nêu để chốt, không tự bỏ nghiệp vụ.
 - Giữ Server Components mặc định; dùng Client Components cho state tương tác,
   event handlers và browser APIs. Đặt code theo route; chỉ tách dùng chung khi có nhu cầu.
 - Nối API theo contract backend; quy trình nằm tại
